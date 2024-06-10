@@ -1,0 +1,37 @@
+<section class="inicio">
+  <div class="box">
+
+  </div>
+  <div>
+    <h5 class="textocen">Sus archivos se han descargado correctamente</h5>
+    <br><br>
+    <h5 class="textocen">Ya puedes cerrar la ventana</h5>
+    <br><br><br>
+    <div class="imagencen">
+      <img src="../../../assets/img/verificado.gif">
+    </div>
+  </div>
+
+  <div class="charge" *ngIf="descargandoZIP">
+    <img src="../../../assets/img/cargando.gif" alt="cargando">
+    <br><br>
+      <!-- Barra de carga -->
+      <div class="progress-bar">
+        <div class="progress-bar-inner"></div>
+      </div>
+    <p>Sus archivos se están descargando, por favor no cierre la ventana :)</p>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const progressBarInner = document.querySelector(".progress-bar-inner");
+
+      progressBarInner.addEventListener("animationiteration", function() {
+        const randomPercentage = Math.random() * 20; // Avance aleatorio entre 0% y 20%
+        progressBarInner.style.width = `${parseFloat(progressBarInner.style.width) + randomPercentage}%`;
+      });
+    });
+  </script>
+
+</section>
+

@@ -1,0 +1,474 @@
+<section class="archivos">
+    <div class="charge" *ngIf="charge">
+        <img src="../../../assets/img/cargando.gif" alt="cargando">
+        <p>El proceso llevará unos segundos, no recargues la página</p>
+    </div>
+    <h1>Archivos de <br><span>Proveedor</span></h1>
+    <div class="imagenes">
+        <a (click)="validar()" *ngIf="archivos.validar!= true && identity.rol != 'proveedor' && identity.rol != 'usuariolec' && archivos._id !=''"><img src="./../../../assets/img/comprobado.png" title="Validar Archivos" alt=""></a>
+        <a (click)="rechazar()" *ngIf="archivos._id != '' && identity.rol != 'proveedor' && identity.rol != 'usuariolec'"><img src="./../../../assets/img/cancelar (1).png" alt="" title="Rechazar Archivos"></a>
+        <a href="{{url+'archivos/'+ vendor['rfc']+ '.zip'}}" target="_blank" *ngIf="archivos._id != '' && identity.rol != 'proveedor' && identity.rol != 'usuariolec'"><img src="./../../../assets/img/downloading.png" alt="" title="Descargar Archivos"></a>
+        <!-- <a (click)="habilitar()" *ngIf="archivos._id != '' && identity.rol != 'proveedor'"><img src="./../../../assets/img/editar.png" alt="" title="Editar Archivos"></a> -->
+    </div>
+
+    <!-- Datros del vatillo, vatilla o empresilla -->
+    <div class="register">
+        <form #vendorForm="ngForm" (ngSubmit)="onSubmitU()">
+            <div class="input">
+                <label for="rfc">Rfc</label>
+                <input type="text" name="rfc" id="rfc" #rfc="ngModel" [(ngModel)]="vendor.rfc" maxlength="13" minlength="12" required readonly>
+                <span *ngIf="!rfc.valid && rfc.touched || rfc.value.trim() == ''" class="rojo">
+                    Rfc incorrecto
+                </span>
+            </div>
+            <div class="input">
+                <label for="regP">Registro patronal</label>
+                <input type="text" id="regP" #regP="ngModel" [(ngModel)]="vendor.registroPatronal" name="regP" required>
+                <span *ngIf="!regP.valid && regP.touched || regP.value.trim() == ''" class="rojo">
+                    Registro patronal incorrecto
+                </span>
+            </div>
+            <div class="input">
+                <label for="razonS">Razón social</label>
+                <input type="text" id="razonS" #razonS="ngModel" [(ngModel)]="vendor.razonSocial" name="razonS" required>
+                <span *ngIf="!razonS.valid && razonS.touched || razonS.value.trim() == ''" class="rojo">
+                    Razón social incorrecto
+                </span>
+            </div>
+            <div class="input">
+                <label for="datosC" class="bton">Nombre del contacto</label>
+                <input type="text" class="bton" id="datosC" name="datosC" #datosC="ngModel" [(ngModel)]="vendor.nombreContacto" required>
+                <span *ngIf="!datosC.valid && datosC.touched || datosC.value.trim() == ''" class="rojo">
+                    Nombre del contacto incorrecto
+                </span>
+            </div>
+            <div class="input">
+                <label for="correo" class="bton">Correo del contacto</label>
+                <input type="email" class="bton" id="correo" name="correo" #correo="ngModel" (keyup)="changeData()" [(ngModel)]="vendor.correo" required email>
+                <span *ngIf="!correo.valid && correo.touched" class="rojo">
+                    Correo incorrecto
+                </span>
+            </div>
+            <div class="input">
+                <label for="telefono" class="bton">Teléfono del contacto</label>
+                <input type="number" class="bton" id="telefono" #telefono="ngModel" [(ngModel)]="vendor.telefono" name="telefono" min="1000000000" max="9999999999" required>
+                <span *ngIf="!telefono.valid && telefono.touched" class="rojo">
+                    Teléfono incorrecto
+                </span>
+            </div>
+
+            <div class="input">
+                <label for="tipoP" class="bton">Tipo de proveedor</label>
+                <select id="tipoP" class="bton" name="tipoP" #tipoP="ngModel" [(ngModel)]="vendor.tipoProveedor" required>
+                <option value="ingeniería">INGENIERÍA</option>
+                <option value="estudios mecánica de suelos">ESTUDIOS MECÁNICA DE SUELOS</option>
+                <option value="estudios topografía">ESTUDIOS TOPOGRAFÍA</option>
+                <option value="personal por administración">PERSONAL X ADMINISTRACIÓN</option>
+                <option value="otros">OTROS</option>
+            </select>
+                <span *ngIf="!tipoP.valid && tipoP.touched" class="rojo">
+                Tipo de proveedor incorrecto
+                </span>
+            </div>
+            <div class="input">
+                <label for="regimenF" class="bton">Régimen fiscal</label>
+                <select id="regimenF" class="bton" name="regimenF" #regimenF="ngModel" [(ngModel)]="vendor.regimenFiscal" required>
+                <option value="fisica">PERSONA FÍSICA</option>
+                <option value="moral">PERSONA MORAL</option>
+                <option value="repse-fisica">REPSE FISICA</option>
+                <option value="repse-moral">REPSE MORAL</option>
+
+
+
+            </select>
+                <span *ngIf="!regimenF.valid && regimenF.touched" class="rojo">
+                Régimen fiscal incorrecto
+            </span>
+            </div>
+
+
+
+            <div class="textarea">
+                <label for="obser" class="bton">Observaciones</label>
+                <textarea id="obser" class="bton" name="obser" #obser="ngModel" [(ngModel)]="vendor.observaciones"></textarea>
+            </div>
+            <input id="boton" class="bton" type="submit" value="Actualizar Información" [disabled]="!vendorForm.form.valid">
+
+        </form>
+    </div>
+
+    <!-- fisica y moral-->
+
+    <form #ArchivesForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="vendor.regimenFiscal != 'repse'">
+        <span *ngIf="archivos._id != '' && archivos.validar== false" class="alert rojo"> Archivos Enviados Pendientes De Revisión</span>
+        <span *ngIf="archivos._id != '' && archivos.validar== true" class="alert verde"> Archivos Aceptados</span>
+        <span *ngIf="archivos._id == ''" class="alert negro"> Enviar Archivos Correspondientes </span>
+        <details>
+          <summary>1. Formato requisitado para alta del proveedor</summary>
+          <div class="file-upload-container" *ngIf="archivos.archivo1==''">
+            <br>
+              <h5>Arrastra tu archivo en esta zona</h5>
+              <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+            <input type="file" placeholder="Selecciona o arrastra el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent1($event)">
+          </div>
+
+          <a class="gris" href="{{url+'archivos/'+ archivos.archivo1}}" *ngIf="archivos.archivo1!=''" target="_blank">Ver archivo</a>
+          <br> <br>
+          <input type="file" placeholder="Selecciona o arrastra el archivo" class="file file1" *ngIf="archivos.archivo1!=''" accept="application/pdf" (change)="fileChangeEvent1($event)">
+
+          <button type="button" *ngIf="archivos.archivo1!=''"  class="buttonski" (click)="actualizarArchivos">Actualizar Documento</button>
+
+        </details>
+
+        <details>
+            <summary>2. Constancia de situación fiscal SAT</summary>
+            <div class="file-upload-container" *ngIf="archivos.archivo2==''">
+              <br>
+              <h5>Arrastra tu archivo en esta zona</h5>
+              <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+
+            <input type="file" placeholder="Selecciona o arrastra el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent2($event)">
+            </div>
+            <a class="gris" href="{{url+'archivos/'+ archivos.archivo2}}" *ngIf="archivos.archivo2!=''" target="_blank">Ver archivo</a>
+            <br> <br> <br>
+
+            <input type="file" placeholder="Selecciona o arrastra el archivo" class="file file1" *ngIf="archivos.archivo2!=''" accept="application/pdf" (change)="fileChangeEvent2($event)">
+
+            <button type="button" *ngIf="archivos.archivo2!=''" class="buttonski" (click)="actualizarArchivos()">Actualizar Documento</button>
+
+
+        </details>
+        <details>
+            <summary>3. Alta imss registro patronal</summary>
+            <div class="file-upload-container" *ngIf="archivos.archivo3==''">
+              <br>
+              <h5>Arrastra tu archivo en esta zona</h5>
+              <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+
+            <input type="file" placeholder="Selecciona o arrastra el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent3($event)">
+
+          </div>
+            <a class="gris" href="{{url+'archivos/'+ archivos.archivo3}}" *ngIf="archivos.archivo3!=''" target="_blank">Ver archivo</a>
+            <br> <br> <br>
+           <!--   <button type="button" *ngIf="archivos.archivo3!=''" class="buttonski"> Cambiar archivo</button>
+            <button type="button" *ngIf="archivos.archivo3==''" class="buttonski">Actualizar Documento</button> -->
+
+        </details>
+        <details>
+            <summary>4. Ine representante legal</summary>
+            <div class="file-upload-container" *ngIf="archivos.archivo4==''">
+              <br>
+              <h5>Arrastra tu archivo en esta zona</h5>
+              <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+
+            <input type="file" placeholder="Seleccionar o arrastrar el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent4($event)">
+            </div>
+            <a class="gris" href="{{url+'archivos/'+ archivos.archivo4}}" *ngIf="archivos.archivo4!=''" target="_blank">Ver archivo</a>
+            <br> <br> <br>
+            <!--  <button type="button" *ngIf="archivos.archivo4!=''" class="buttonski"> Cambiar archivo</button>
+            <button type="button" *ngIf="archivos.archivo4==''" class="buttonski">Actualizar Documento</button> -->
+
+        </details>
+
+        <!-- Numero 5 unicamente persona moral -->
+        <details class="ocultar">
+            <summary>5. Acta constitutiva y modificaciones(persona moral) y poder del representante legal</summary>
+            <div class="file-upload-container" *ngIf="archivos.archivo5==''">
+              <br>
+              <h5>Arrastra tu archivo en esta zona</h5>
+              <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+
+            <input type="file" placeholder="Seleccionar o arrastrar el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent5($event)">
+            </div>
+            <a class="gris" href="{{url+'archivos/'+ archivos.archivo5}}" *ngIf="archivos.archivo5!=''" target="_blank">Ver archivo</a>
+            <br> <br> <br>
+         <!--     <button type="button" *ngIf="archivos.archivo5!=''" class="buttonski"> Cambiar archivo</button>
+            <button type="button" *ngIf="archivos.archivo5==''" class="buttonski">Actualizar Documento</button>-->
+
+        </details>
+        <details>
+            <summary>6. Comprobante de domicilio del domicilio fiscal vigente</summary>
+            <div class="file-upload-container" *ngIf="archivos.archivo6==''">
+              <br>
+              <h5>Arrastra tu archivo en esta zona</h5>
+              <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+
+            <input type="file" placeholder="Seleccionar o arrastrar el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent6($event)">
+            </div>
+            <a class="gris" href="{{url+'archivos/'+ archivos.archivo6}}" *ngIf="archivos.archivo6!=''" target="_blank">Ver archivo</a>
+            <br> <br> <br>
+         <!--     <button type="button" *ngIf="archivos.archivo6!=''" class="buttonski"> Cambiar archivo</button>
+            <button type="button" *ngIf="archivos.archivo6==''" class="buttonski">Actualizar Documento</button> -->
+
+        </details>
+        <details>
+            <summary>7. Estado de cuenta con cuenta clabe, sólo caratula </summary>
+            <div class="file-upload-container" *ngIf="archivos.archivo7==''">
+              <br>
+              <h5>Arrastra tu archivo en esta zona</h5>
+              <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+
+            <input type="file" placeholder="Seleccionar o arrastrar el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent7($event)">
+            </div>
+            <a class="gris" href="{{url+'archivos/'+ archivos.archivo7}}" *ngIf="archivos.archivo7!=''" target="_blank">Ver archivo   {{archivos.archivo7}}</a>
+            <br> <br> <br>
+        <!--      <button type="button" *ngIf="archivos.archivo7!=''" class="buttonski"> Cambiar archivo</button>
+            <button type="button" *ngIf="archivos.archivo7==''" class="buttonski">Actualizar Documento</button> -->
+
+        </details>
+        <details>
+            <summary>8. Opinión de cumplimiento de 32D SAT </summary>
+            <div class="file-upload-container" *ngIf="archivos.archivo8==''">
+              <br>
+              <h5>Arrastra tu archivo en esta zona</h5>
+              <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+
+            <input type="file" placeholder="Seleccionar o arrastrar el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent8($event)">
+            </div>
+            <a class="gris" href="{{url+'archivos/'+ archivos.archivo8}}" *ngIf="archivos.archivo8!=''" target="_blank">Ver archivo</a>
+            <br> <br> <br>
+        <!--      <button type="button" *ngIf="archivos.archivo8!=''" class="buttonski"> Cambiar archivo</button>
+            <button type="button" *ngIf="archivos.archivo8==''" class="buttonski">Actualizar Documento</button> -->
+
+        </details>
+        <details>
+            <summary>9. Opinión de cumplimiento de 32D IMSS</summary>
+            <div class="file-upload-container" *ngIf="archivos.archivo9==''">
+              <br>
+              <h5>Arrastra tu archivo en esta zona</h5>
+              <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+
+            <input type="file" placeholder="Seleccionar o arrastrar el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent9($event)">
+            </div>
+            <a class="gris" href="{{url+'archivos/'+ archivos.archivo9}}" *ngIf="archivos.archivo9!=''" target="_blank">Ver archivo</a>
+            <br> <br> <br>
+        <!--      <button type="button" *ngIf="archivos.archivo9!=''" class="buttonski"> Cambiar archivo</button>
+            <button type="button" *ngIf="archivos.archivo9==''" class="buttonski">Actualizar Documento</button> -->
+
+        </details>
+        <details>
+            <summary>10. Opinión de cumplimiento de 32D INFONAVIT</summary>
+            <div class="file-upload-container" *ngIf="archivos.archivo10==''">
+              <br>
+              <h5>Arrastra tu archivo en esta zona</h5>
+              <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+
+            <input type="file" placeholder="Seleccionar o arrastrar el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent10($event)">
+            </div>
+            <a class="gris" href="{{url+'archivos/'+ archivos.archivo10}}" *ngIf="archivos.archivo10!=''" target="_blank">Ver archivo</a>
+            <br> <br> <br>
+        <!--      <button type="button" *ngIf="archivos.archivo10!=''" class="buttonski"> Cambiar archivo</button>
+            <button type="button" *ngIf="archivos.archivo10==''" class="buttonski">Actualizar Documento</button> -->
+
+        </details>
+        <details>
+            <summary>11. Curriculum de la empresa o persona fisica y/o cédula de las personas que realizarán el proyecto</summary>
+            <div class="file-upload-container" *ngIf="archivos.archivo11==''">
+              <br>
+              <h5>Arrastra tu archivo en esta zona</h5>
+              <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+
+            <input type="file" placeholder="Seleccionar o arrastrar el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent11($event)">
+            </div>
+            <a class="gris" href="{{url+'archivos/'+ archivos.archivo11}}" *ngIf="archivos.archivo11!=''" target="_blank">Ver archivo</a>
+            <br> <br> <br>
+        <!--      <button type="button" *ngIf="archivos.archivo11!=''" class="buttonski"> Cambiar archivo</button>
+            <button type="button" *ngIf="archivos.archivo11==''" class="buttonski">Actualizar Documento</button> -->
+
+        </details>
+        <details>
+            <summary>12. Registro de prestadoras de servicios especializados u obras especializadas (REPSE)</summary>
+            <div class="file-upload-container" *ngIf="archivos.archivo12==''">
+              <br>
+              <h5>Arrastra tu archivo en esta zona</h5>
+              <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+
+            <input type="file" placeholder="Seleccionar o arrastrar el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent12($event)">
+            </div>
+            <a class="gris" href="{{url+'archivos/'+ archivos.archivo12}}" *ngIf="archivos.archivo12!=''" target="_blank">Ver archivo</a>
+            <br> <br> <br>
+      <!--        <button type="button" *ngIf="archivos.archivo12!=''" class="buttonski"> Cambiar archivo</button>
+            <button type="button" *ngIf="archivos.archivo12==''" class="buttonski">Actualizar Documento</button> -->
+
+        </details>
+        <details>
+            <summary>13. Especificaciones de calibración de equipos y certificaciones en caso de contar con equipo </summary>
+            <div class="file-upload-container" *ngIf="archivos.archivo13==''">
+              <br>
+              <h5>Arrastra tu archivo en esta zona</h5>
+              <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+
+            <input type="file" placeholder="Seleccionar o arrastrar el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent13($event)">
+            </div>
+            <a class="gris" href="{{url+'archivos/'+ archivos.archivo13}}" *ngIf="archivos.archivo13!=''" target="_blank">Ver archivo</a>
+            <br> <br> <br>
+        <!--      <button type="button" *ngIf="archivos.archivo13!=''" class="buttonski"> Cambiar archivo</button>
+            <button type="button" *ngIf="archivos.archivo13==''" class="buttonski">Actualizar Documento</button> -->
+
+        </details>
+        <details>
+            <summary>14. Contrato de servicios y código de ética firmado por representante legal</summary>
+            <div class="file-upload-container" *ngIf="archivos.archivo14==''">
+              <br>
+              <h5>Arrastra tu archivo en esta zona</h5>
+              <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+
+            <input type="file" placeholder="Seleccionar o arrastrar el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent14($event)">
+            </div>
+            <a class="gris" href="{{url+'archivos/'+ archivos.archivo14}}" *ngIf="archivos.archivo14!=''" target="_blank">Ver archivo</a>
+            <br> <br> <br>
+       <!--       <button type="button" *ngIf="archivos.archivo14!=''" class="buttonski"> Cambiar archivo</button>
+            <button type="button" *ngIf="archivos.archivo14==''" class="buttonski">Actualizar Documento</button> -->
+
+        </details>
+        <details>
+            <summary>15. Última declaración anual y estados financieros del año(cualquiera de los últimos 3 meses)</summary>
+            <div class="file-upload-container" *ngIf="archivos.archivo15==''">
+              <br>
+              <h5>Arrastra tu archivo en esta zona</h5>
+              <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+
+            <input type="file" placeholder="Seleccionar o arrastrar el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent15($event)">
+            </div>
+            <a class="gris" href="{{url+'archivos/'+ archivos.archivo15}}" *ngIf="archivos.archivo15!=''" target="_blank">Ver archivo</a>
+            <br> <br> <br>
+        <!--      <button type="button" *ngIf="archivos.archivo15!=''" class="buttonski"> Cambiar archivo</button>
+            <button type="button" *ngIf="archivos.archivo15==''" class="buttonski">Actualizar Documento</button> -->
+
+        </details>
+
+        <input type="submit" name="" value="Enviar" [disabled]="!ArchivesForm.form.valid" *ngIf="archivos._id == '' ">
+
+
+
+    </form>
+
+
+    <!-- repse moral -->
+
+    <form #ArchivesForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="vendor.regimenFiscal == 'repse-moral'">
+
+      <span *ngIf="archivos._id != '' && archivos.validar== false" class="alert rojo"> Archivos Enviados Pendientes De Revisión</span>
+      <span *ngIf="archivos._id != '' && archivos.validar== true" class="alert verde"> Archivos Aceptados</span>
+      <span *ngIf="archivos._id == ''" class="alert negro"> Enviar Archivos Correspondientes </span>
+      <details>
+        <summary>1. Formato requisitado para alta del proveedor</summary>
+        <div class="file-upload-container" *ngIf="archivos.archivo1==''">
+          <br>
+            <h5>Arrastra tu archivo en esta zona</h5>
+            <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+          <input type="file" placeholder="Selecciona o arrastra el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent1($event)">
+        </div>
+        <a class="gris" href="{{url+'archivos/'+ archivos.archivo1}}" *ngIf="archivos.archivo1!=''" target="_blank">Ver archivo</a>
+        <span>{{archivos.archivo1}}</span>
+      </details>
+
+      <details>
+          <summary>2. Comprobante de Domicilio</summary>
+          <div class="file-upload-container" *ngIf="archivos.archivo1==''">
+            <br>
+            <h5>Arrastra tu archivo en esta zona</h5>
+            <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+
+          <input type="file" placeholder="Selecciona o arrastra el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent2($event)">
+          </div>
+          <a class="gris" href="{{url+'archivos/'+ archivos.archivo2}}" *ngIf="archivos.archivo2!=''" target="_blank">Ver archivo</a>
+          <span>{{archivos.archivo2}}</span>
+
+      </details>
+      <details>
+          <summary>3. CFDI</summary>
+          <div class="file-upload-container" *ngIf="archivos.archivo1==''">
+            <br>
+            <h5>Arrastra tu archivo en esta zona</h5>
+            <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+
+          <input type="file" placeholder="Selecciona o arrastra el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent3($event)">
+
+        </div>
+          <a class="gris" href="{{url+'archivos/'+ archivos.archivo3}}" *ngIf="archivos.archivo3!=''" target="_blank">Ver archivo</a>
+          <span>{{archivos.archivo3}}</span>
+      </details>
+      <details>
+          <summary>4. Codigo de Etica</summary>
+          <div class="file-upload-container" *ngIf="archivos.archivo1==''">
+            <br>
+            <h5>Arrastra tu archivo en esta zona</h5>
+            <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+
+          <input type="file" placeholder="Seleccionar o arrastrar el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent4($event)">
+          </div>
+          <a class="gris" href="{{url+'archivos/'+ archivos.archivo4}}" *ngIf="archivos.archivo4!=''" target="_blank">Ver archivo</a>
+          <span>{{archivos.archivo4}}</span>
+      </details>
+
+      <input type="submit" name="" value="Enviar" [disabled]="!ArchivesForm.form.valid" *ngIf="archivos._id == '' ">
+  </form>
+
+
+
+  <!-- repse fisica -->
+
+  <form #ArchivesForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="vendor.regimenFiscal == 'repse'">
+
+    <span *ngIf="archivos._id != '' && archivos.validar== false" class="alert rojo"> Archivos Enviados Pendientes De Revisión</span>
+    <span *ngIf="archivos._id != '' && archivos.validar== true" class="alert verde"> Archivos Aceptados</span>
+    <span *ngIf="archivos._id == ''" class="alert negro"> Enviar Archivos Correspondientes </span>
+    <details>
+      <summary>1. Formato requisitado para alta del proveedor</summary>
+      <div class="file-upload-container" *ngIf="archivos.archivo1==''">
+        <br>
+          <h5>Arrastra tu archivo en esta zona</h5>
+          <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+        <input type="file" placeholder="Selecciona o arrastra el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent1($event)">
+      </div>
+      <a class="gris" href="{{url+'archivos/'+ archivos.archivo1}}" *ngIf="archivos.archivo1!=''" target="_blank">Ver archivo</a>
+      <span>{{archivos.archivo1}}</span>
+    </details>
+
+    <details>
+        <summary>2. Comprobante de Domicilio</summary>
+        <div class="file-upload-container" *ngIf="archivos.archivo1==''">
+          <br>
+          <h5>Arrastra tu archivo en esta zona</h5>
+          <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+
+        <input type="file" placeholder="Selecciona o arrastra el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent2($event)">
+        </div>
+        <a class="gris" href="{{url+'archivos/'+ archivos.archivo2}}" *ngIf="archivos.archivo2!=''" target="_blank">Ver archivo</a>
+        <span>{{archivos.archivo2}}</span>
+
+    </details>
+    <details>
+        <summary>3. CFDI</summary>
+        <div class="file-upload-container" *ngIf="archivos.archivo1==''">
+          <br>
+          <h5>Arrastra tu archivo en esta zona</h5>
+          <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+
+        <input type="file" placeholder="Selecciona o arrastra el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent3($event)">
+
+      </div>
+        <a class="gris" href="{{url+'archivos/'+ archivos.archivo3}}" *ngIf="archivos.archivo3!=''" target="_blank">Ver archivo</a>
+        <span>{{archivos.archivo3}}</span>
+    </details>
+    <details>
+        <summary>4. Codigo de Etica</summary>
+        <div class="file-upload-container" *ngIf="archivos.archivo1==''">
+          <br>
+          <h5>Arrastra tu archivo en esta zona</h5>
+          <img src="../../../assets/img/arrastra-y-suelta.png" alt="arrastrar" width="65" height="65">
+
+        <input type="file" placeholder="Seleccionar o arrastrar el archivo" class="file file1" accept="application/pdf" (change)="fileChangeEvent4($event)">
+        </div>
+        <a class="gris" href="{{url+'archivos/'+ archivos.archivo4}}" *ngIf="archivos.archivo4!=''" target="_blank">Ver archivo</a>
+        <span>{{archivos.archivo4}}</span>
+    </details>
+
+    <input type="submit" name="" value="Enviar" [disabled]="!ArchivesForm.form.valid" *ngIf="archivos._id == '' ">
+
+
+
+</form>
+
+</section>

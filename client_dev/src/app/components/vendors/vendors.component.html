@@ -1,0 +1,210 @@
+<section class="proveedores">
+  <div class="circle"></div>
+  <h1>Proveedores<br /><span>Registrados</span></h1>
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <input
+      [formControl]="search"
+      (input)="handleSearch(search.value)"
+      matInput
+      placeholder="Buscar Proveedor"
+    />
+    <i class="fa fa-search"></i>
+  </mat-form-field>
+
+  <!-- Botonera -->
+
+  <div class="botonera">
+    <div>
+      <img
+        src="../../../assets/img/aceptar.png"
+        (click)="filterValidArchives()"
+        alt="Archivos Válidos"
+        class="btn-descarga"
+      />
+      <p class="textobotonera">
+        Filtrado <br />
+        validos
+      </p>
+    </div>
+    <div>
+      <img
+        src="../../../assets/img/borrar.png"
+        (click)="filterInvalidArchives()"
+        alt="Archivos No Válidos"
+        class="btn-descarga"
+      />
+      <p class="textobotonera">
+        Filtrado <br />
+        invalidos
+      </p>
+    </div>
+
+    <!-- A mas tardar viernes 24 de mayo -->
+    <!-- Filtros de Regimen  -->
+
+    <div>
+      <img
+        src="../../../assets/img/museo.png"
+        (click)="filterRegimenR()"
+        alt="Mostrar Repse"
+        class="btn-descarga"
+      />
+      <p class="textobotonera">
+        Filtrado <br />
+        REPSE
+      </p>
+    </div>
+    <div>
+      <img
+        src="../../../assets/img/edificio-de-oficinas.png"
+        (click)="filterRegimenM()"
+        alt="Mostrar Moral"
+        class="btn-descarga"
+      />
+      <p class="textobotonera">
+        Filtrado <br />
+        MORAL
+      </p>
+    </div>
+    <div>
+      <img
+        src="../../../assets/img/trabajador.png"
+        (click)="filterRegimenF()"
+        alt="Mostrar Fisica"
+        class="btn-descarga"
+      />
+      <p class="textobotonera">
+        Filtrado <br />
+        FISICA
+      </p>
+    </div>
+
+    <!-- Limpia los filtros -->
+
+    <div>
+      <img
+        src="../../../assets/img/todas.png"
+        (click)="showAllVendors()"
+        alt="Mostrar Todas"
+        class="btn-descarga"
+      />
+      <p class="textobotonera">
+        Limpiar <br />
+        Filtros
+      </p>
+    </div>
+
+    <!-- Cambia entre vista mosaico y vista lista -->
+
+    <div>
+      <img
+        src="../../../assets/img/intercambiar.png"
+        (click)="toggleView()"
+        alt="Intercambiar Vista"
+        class="btn-descarga"
+      />
+      <p class="textobotonera">
+        Alternar <br />
+        Vista
+      </p>
+    </div>
+  </div>
+
+  <!-- Vista Mosaico -->
+
+  <div *ngFor="let vendor of vendors | search : filtroValor">
+    <div
+      *ngIf="!mosaicoView"
+      class="proveedor"
+      [ngStyle]="{
+        'border-bottom-color': vendor.verificado ? '#0881C1' : '#FF0000'
+      }"
+    >
+      <a [routerLink]="['/proveedor', vendor._id]">
+        <div class="text">
+          <h2><br />{{ vendor.razonSocial.toUpperCase() }}</h2>
+          <h2>RFC: {{ vendor.rfc.toUpperCase() }}</h2>
+          <h2>REGIMEN: {{ vendor.regimenFiscal.toUpperCase() }}</h2>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Vista de tabla -->
+  <div *ngIf="mosaicoView">
+    <table>
+      <tr>
+        <th>Nombre</th>
+        <th>RFC</th>
+        <th>Regimen</th>
+        <th>Registro Patronal</th>
+        <th>Contacto</th>
+        <th>Telefono</th>
+        <th>Correo</th>
+        <th>Validado</th>
+      </tr>
+      <tr
+        *ngFor="let vendor of vendors | search : filtroValor"
+        [ngStyle]="{
+          'border-bottom-color': vendor.verificado ? '#0881C1' : '#FF0000'
+        }"
+      >
+        <td style="text-align: left">
+          <a [routerLink]="['/proveedor', vendor._id]">{{
+            vendor.razonSocial.toUpperCase()
+          }}</a>
+        </td>
+        <td>
+          <a [routerLink]="['/proveedor', vendor._id]">{{
+            vendor.rfc.toUpperCase()
+          }}</a>
+        </td>
+        <td>
+          <a [routerLink]="['/proveedor', vendor._id]">{{
+            vendor.regimenFiscal.toUpperCase()
+          }}</a>
+        </td>
+        <td>
+          <a [routerLink]="['/proveedor', vendor._id]">{{
+            vendor.registroPatronal.toUpperCase()
+          }}</a>
+        </td>
+        <td style="text-align: left">
+          <a [routerLink]="['/proveedor', vendor._id]">{{
+            vendor.nombreContacto.toUpperCase()
+          }}</a>
+        </td>
+        <td>
+          <a [routerLink]="['/proveedor', vendor._id]">{{
+            vendor.telefono.toString()
+          }}</a>
+        </td>
+
+        <td
+          style="
+            color: blue;
+            text-decoration: underline;
+            text-decoration-color: blue;
+            font-weight: bold;
+            text-align: left;
+          "
+        >
+          <a href="mailto:{{ vendor.correo }}" class="email-link">{{
+            vendor.correo.toUpperCase()
+          }}</a>
+        </td>
+        <!--Color de validado o no validado-->
+        <td
+          [ngStyle]="{
+            'background-color': vendor.verificado
+              ? 'rgba(81, 251, 0, 0.61)'
+              : 'rgba(251, 0, 0, 0.79)',
+            'border-left': '2px solid #000000',
+            'border-bottom': '2px solid #000000'
+          }"
+        ></td>
+      </tr>
+    </table>
+  </div>
+</section>

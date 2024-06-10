@@ -1,0 +1,26 @@
+<header>
+    <div class="logo">
+        <a [routerLink]="['/inicio']">
+          <!-- Aqui es donde nos encontramos el logo de toda la pagina -->
+            <img src="../assets/img/Logos GRUPO SACMAG copia.gif" alt="">
+        </a>
+
+    </div>
+    <div class="toggle" (click)="menu();" *ngIf="identity!='{}'"></div>
+    <nav *ngIf="identity!='{}'" class="navigation">
+
+        <a [routerLink]="['/inicio']" (click)="menu()" [routerLinkActive]="['active']">Inicio</a>
+        <a [routerLink]="['/datos']" [routerLinkActive]="['active']" (click)="menu()">Datos Generales</a>
+        <a [routerLink]="['/proveedores']" [routerLinkActive]="['active']" (click)="menu()" *ngIf="rol != 'proveedor'">Proveedores</a>
+        <a [routerLink]="['/archivos']" [routerLinkActive]="['active']" (click)="menu()" *ngIf="rol == 'proveedor'">Archivos</a>
+        <a [routerLink]="['/registro']" [routerLinkActive]="['active']" (click)="menu()" *ngIf="rol == 'administrador' || rol == 'usuario'">Registrar Proveedor</a>
+        <a [routerLink]="['/registro-usuarios']" [routerLinkActive]="['active']" (click)="menu()" *ngIf="rol == 'administrador'">Registrar Usuario</a>
+        <a [routerLink]="['/archivos-all']" [routerLinkActive]="['active']" (click)="confirmarDescargaTodo()" *ngIf="rol == 'usuariolec' || rol=='administrador' || rol=='contador'" text-color: blue>|| Descargar todo ||</a>
+
+
+
+        <a (click)="logOut()" href="#">Salir</a>
+    </nav>
+</header>
+
+<router-outlet></router-outlet>

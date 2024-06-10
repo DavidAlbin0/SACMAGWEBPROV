@@ -1,0 +1,1004 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.fa.fa-search {
+    position: absolute;
+    right: 5px;
+    cursor: pointer;
+}
+
+.mat-form-field {
+    width: 30%;
+    position: absolute!important;
+    top: 0;
+    right: 100px;
+    margin-top: 25px;
+}
+
+.mat-form-field.mat-focused .mat-form-field-underline span {
+    background-color:  #0881C1!important;
+}
+
+.charge {
+    position: fixed;
+    transform: translateX(-50%);
+    left: 50%;
+    top: 0;
+    background-color: rgb(248, 248, 248);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 5px;
+    transition: .2s;
+    border-radius: 5px;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Estilos para el contenedor de la tabla */
+.table-container {
+  overflow-x: auto;
+}
+
+/* Estilo para el botón cuando está activo */
+button.filter-active {
+  background-color: #007bff; /* Color de fondo cuando está activo */
+  color: #fff; /* Color del texto cuando está activo */
+}
+
+
+/* Estilos para la tabla */
+table {
+  border-collapse: collapse;
+  margin-bottom: 45px;
+  margin-top: 25px;
+  border-bottom: 2.5px solid #000;
+  border-right: 2.5px solid rgb(0, 0, 0);
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  align-items: center;
+  margin-left: -35px;
+
+}
+
+th, td {
+  border-bottom: 1px solid #0881C1;
+  text-align: center;
+  padding: 8px;
+  font-size: 1rem;
+  background-color: #ffffff;
+  font-family: sans-serif;
+
+}
+
+th {
+  background-color: #000000;
+  color: #ffffff;
+  font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 1rem;
+
+}
+
+/* Estilo para hacer la tabla responsiva en pantallas pequeñas */
+@media screen and (max-width: 100%) {
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  /* Ocultar el encabezado original */
+  thead tr {
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr {
+    margin-bottom: 15px;
+  }
+
+  td {
+    /* Establecer el ancho máximo de las celdas */
+    width: 100%;
+    font-size: 0.6rem;
+
+  }
+}
+
+.email-link {
+  color: #0000FF;
+  text-decoration: underline;
+  text-decoration-color: blue;
+  font-size: 0.75rem;
+}
+
+.buttonski {
+  border: none;
+  color: rgb(0, 0, 0);
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  background-color: #c8e9ff;
+  transition: background-color 0.3s ease;
+}
+
+.buttonski:hover {
+  background-color: #a7d8ff;
+}
+
+.buttonski:active {
+  transform: translateY(.5px);
+}
+
+
+.charge img {
+    width: 40px;
+    height: 40px;
+}
+
+.box img.gif {
+  width: 40px;
+  height: 10px;
+}
+
+
+.charge p {
+    font-size: 1em;
+}
+
+input:disabled {
+    opacity: .5;
+    cursor: not-allowed!important;
+}
+
+.charge {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  background-color: rgb(248, 248, 248);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 5px;
+  transition: .2s;
+  border-radius: 5px;
+  width: 100vw;
+  height: 100vh;
+}
+
+.progress-bar {
+  width: 70%;
+  height: 20px;
+  background-color: #eee;
+  margin-top: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar-inner {
+  height: 100%;
+  background-color: #4caf50;
+  animation: progressAnimation 1240s linear forwards; /* 14 minutos = 840 segundos */
+}
+
+@keyframes progressAnimation {
+  0% {
+      width: 0;
+  }
+
+  100% {
+      width: 100%;
+  }
+}
+/* Estilo para resaltar elementos verificados */
+.verified {
+  border-bottom-color: #0881C1 !important;
+}
+
+
+.modificar {
+    display: block;
+    text-decoration: underline;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.alert.rojo {
+    padding: 2px 15px;
+    color: #fff;
+    font-size: .9em;
+    cursor: default;
+    background-color: rgb(155, 13, 13);
+}
+
+.alert.verde {
+    padding: 2px 15px;
+    color: #fff;
+    font-size: .9em;
+    cursor: default;
+    background-color: #197c06;
+}
+
+.alert.negro {
+    padding: 2px 15px;
+    color: #fff;
+    font-size: 1em;
+    cursor: default;
+    background-color: #111;
+}
+
+.rojo {
+    color: #9b0d0d;
+    font-size: .9em;
+
+}
+
+.gris {
+    background-color: #cfcfcf;
+    text-decoration: none;
+    color: #111;
+    padding: 5px;
+    border-radius: 5px;
+    margin-right: 10px;
+    transition: .5s;
+}
+
+.gris:hover {
+    background-color: #acacac;
+}
+
+.verde {
+    color: #197c06;
+    font-size: 1.5em;
+}
+
+.azul {
+    background-color:  #0881C1;
+}
+
+h1 {
+    font-size: 3em;
+    line-height: 1.2em;
+    text-shadow: 5px 10px 10px rgba(0, 0, 0, .5);
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: .7em;
+}
+/* Color de letras en el titulo*/
+h5 {
+  font-size: 1.5em;
+}
+
+h1 span {
+    font-size: 1.3em;
+    color:  #0881C1;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 100px;
+    align-items: center;
+}
+
+header nav a {
+    margin-left: 15px;
+    text-decoration: none;
+    font-size: 1.1em;
+    color: #111;
+    user-select: none;
+    animation: slide_top .5s linear forwards;
+    animation-delay: calc(.2s * var(--i));
+    opacity: 0;
+}
+
+header nav a.active {
+    letter-spacing: 1px;
+    color:  #0881C1;
+    border-bottom: 2px solid  #0881C1;
+}
+
+@keyframes slide_top {
+    0% {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+header .logo img {
+    width: 150px;
+}
+
+/* Este es el color del circulo */
+
+.circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color:  #0881C1;
+    clip-path: circle(400px at right 700px);
+    z-index: -1;
+}
+
+.inicio,
+.registro,
+.usuario,
+.proveedores,
+.archivos,
+.recInfo {
+    position: relative;
+    width: 100%;
+    margin-top: 50px;
+    min-height: calc(100vh - 100px);
+    padding-bottom: 50px;
+}
+
+.proveedores,
+.archivos {
+    padding: 0 100px;
+    padding-bottom: 50px;
+}
+
+.icono-pequeno {
+  width: 20px; /* Elige el tamaño que desees */
+  height: 20px; /* Elige el tamaño que desees */
+}
+
+.registro .circle {
+    clip-path: circle(400px at left 700px);
+}
+
+.inicio .box,
+.registro .box,
+.usuario .box {
+    display: flex;
+    align-items: center;
+    padding: 0px 100px;
+    width: 100%;
+}
+
+.inicio .box .text {
+    width: 50%;
+}
+
+.textocen{
+    text-align: center;
+    flex-direction: row;
+    margin-top: 20px;
+}
+
+.gifs {
+    width: 10px;
+    height: 10px;
+    margin-top: -30px;
+}
+
+.imagencen{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    size: 15px;
+
+}
+
+
+.inicio .box .text img {
+    width: 70%;
+    margin-top: 20px;
+}
+
+.inicio .box .login {
+    width: 50%;
+}
+
+.inicio .box .login form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.inicio .box .login h2 {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.inicio .box .login a {
+    color:  #0881C1;
+    text-decoration: none;
+}
+
+.inicio .box .login a:hover {
+    color:  #0881C1;
+    ;
+}
+
+.inicio .box .login input {
+    width: 70%;
+    margin-bottom: 7px;
+    padding: 10px;
+    outline: none;
+    border-radius: 10px;
+    border: 1px solid #111;
+}
+
+input[type="submit"],
+.submit {
+    background-color: rgb(44, 44, 44);
+    color: #fff;
+    cursor: pointer;
+    border: 1px solid rgb(44, 44, 44);
+    transition: .5s;
+    padding: 10px;
+    outline: none;
+    border-radius: 10px;
+    border: 1px solid #111;
+    display: block;
+    margin-top: 10px;
+    width: 100%;
+}
+
+input[type="submit"]:hover {
+    background-color: rgb(19, 19, 19);
+}
+
+.registro .image,
+.usuario .image {
+    width: 50%;
+}
+
+.registro .image img,
+.usuario .image img {
+    width: 50%;
+    margin-top: 50px;
+}
+
+.registro .register,
+.usuario .register {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
+}
+
+.archivos h1 {
+    width: 70%!important;
+}
+
+.archivos .register {
+    width: 100%;
+}
+
+.archivos .register form {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.imagenes {
+    margin-bottom: 30px;
+    position: absolute;
+    top: 0;
+    right: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.imagenes a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.imagenes a img {
+    width: 100%;
+    height: 100%;
+}
+
+.archivos .register .input {
+    width: 32%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.archivos .register .textarea {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.archivos .register .input label,
+.archivos .register .textarea label {
+    font-weight: 600;
+}
+
+.archivos .register .input label,
+.archivos .register .input input,
+.archivos .register .input select,
+.archivos .register .textarea label,
+.archivos .register .textarea textarea {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.archivos .register .textarea textarea {
+    height: 60px;
+    min-height: 60px;
+    max-height: 60px;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+.registro .register .boton {
+    margin-bottom: 12px;
+}
+
+.registro .register input,
+.registro .register select,
+.registro .register textarea,
+.usuario .register input,
+.usuario .register select,
+.usuario .register textarea {
+    border: 1px solid #000;
+    padding: 5px;
+    margin-top: 3px;
+    border-radius: 10px;
+    outline: none;
+}
+
+.registro .register label,
+.usuario .register label {
+    font-weight: 600;
+}
+
+.registro .register input,
+.registro .register select,
+.registro .register textarea,
+.usuario .register input,
+.usuario .register select,
+.usuario .register textarea {
+    width: 100%;
+    font-weight: 400;
+}
+
+.registro .register input[type="submit"] {
+    background-color: #0881C1;
+    cursor: pointer;
+    border: none;
+    transition: .5s;
+    color: #fff;
+}
+
+.usuario .register input[type="submit"] {
+    cursor: pointer;
+    background-color: rgb(44, 44, 44);
+    color: #fff;
+    transition: .5s;
+}
+
+.usuario .register input[type="submit"]:hover {
+    background-color: #000;
+}
+
+.recInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.recInfo .modal {
+    height: auto;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 3px 5px 15px rgb(104, 104, 104);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 350px;
+    flex-wrap: wrap;
+}
+
+.recInfo .modal form {
+    width: 100%;
+}
+
+.modal h4 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color:  #0881C1;
+}
+
+.modal form .input {
+    margin-bottom: 10px;
+}
+
+.modal form .input .inputView {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.modal form .input .inputView input {
+    width: 100%;
+    outline: none;
+    padding: 5px;
+}
+
+.modal form .input .inputView span {
+    display: inline-block;
+    width: 100%;
+}
+
+.modal form .input .inputView img {
+    width: 20px;
+    position: absolute;
+    right: 5px;
+    display: inline-block;
+    padding: 2px;
+    background-color:  #0881C1;
+    border-radius: 50%;
+    transition: .5s;
+    cursor: pointer;
+}
+
+.modal form .input .inputView img:hover {
+    transform: scale(1.2);
+}
+
+.registro .register input[type="submit"]:hover {
+    background-color:  #0881C1;
+}
+
+.proveedores {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+/* Estilos de la botonera nueva*/
+
+.botonera{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: left;
+  flex-direction: row;
+  flex-grow: 1;
+}.btn-descarga {
+  width: 35px;
+  height: auto;
+  cursor: pointer;
+  flex: 1;
+  margin-right: 17px;
+  margin-bottom: 20px;
+  transition: transform 0.2s ease; /* Transición para la animación de clic */
+}
+
+.btn-descarga img {
+  border: 2px solid transparent; /* Establecer un borde transparente por defecto */
+}
+
+.btn-descarga.active img {
+  border-color: #007bff; /* Cambiar el color del borde cuando el filtro está activo */
+}
+
+.btn-descarga.active .textobotonera {
+  color: #007bff; /* Cambiar el color del texto cuando el filtro está activo */
+}
+
+.btn-descarga:active {
+  transform: scale(0.7); /* Escala durante el clic */
+}
+
+
+.textobotonera{
+  display: flex;
+  flex-wrap: wrap;
+  width: 20%;
+  justify-content: left;
+  margin-top: -45;
+  margin-bottom: 15;
+  flex-direction: row;
+  flex-grow: 1;
+  font-size: 10px;
+}
+
+/* Estilos para el contenedor del archivo */
+.file-upload-container {
+  border: 2px dashed #ccc; /* Borde punteado gris claro */
+  transition: border-color 0.3s ease; /* Transición suave para el cambio de color */
+  width: 100%; /* Ajustar al ancho completo */
+  padding: 20px; /* Agregar relleno para mayor área de arrastre */
+  height: 200px; /* Ajustar la altura según sea necesario */
+}
+
+/* Estilos para el elemento de archivo */
+.file {
+  width: 100%; /* Ancho completo */
+  height: 100%; /* Altura completa */
+  border: none; /* Eliminar el borde predeterminado */
+  background-color: transparent; /* Fondo transparente */
+  outline: none; /* Eliminar el contorno predeterminado */
+}
+
+
+/* Estilos adicionales al pasar el ratón sobre el botón */
+.btn-descarga:hover {
+  opacity: 0.8; /* Cambiar la opacidad al pasar por encima */
+}
+
+.proveedores a {
+    text-decoration: none;
+    color: #111;
+}
+
+.proveedores h1,
+.archivos h1 {
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+/* Caja  de proveedores, container */
+.proveedores .proveedor {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  padding: 10px;
+  position: relative;
+  /*  background-color: rgb(240, 240, 240); */
+  z-index: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  transition: .5s;
+  margin-top: 35px;
+  cursor: pointer;
+  border-bottom: 10px solid  #0881C1;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, .5);
+  background-color: #fff;
+}
+
+.proveedores .proveedor:hover {
+    transform: translateY(-10px);
+}
+
+.proveedores .proveedor .text {
+    text-align: center;
+}
+
+.proveedores .proveedor .text h2 {
+    margin-bottom: 10px;
+}
+
+.archivos summary {
+    font-weight: 600;
+    background-color:  #0881C1;
+    padding: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    font-size: 1.3em;
+    color: #fff;
+    cursor: pointer;
+}
+
+.archivos input {
+    margin-bottom: 35px;
+}
+
+footer {
+    color: #111;
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    background-color: rgb(34, 34, 34);
+    padding: 3px;
+    color: rgb(231, 231, 231);
+}
+
+footer p {
+    font-size: .9em;
+}
+
+@media (max-width: 950px) {
+    header {
+        padding: 10px 50px;
+    }
+    header nav a {
+        margin-bottom: 10px;
+    }
+    .mat-form-field {
+        width: 40%;
+        position: absolute!important;
+        top: 0;
+        right: 50px;
+        margin-top: 25px;
+    }
+    .navigation {
+        display: none;
+        transition: .5s;
+    }
+    .navigation.active {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(241, 241, 241);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        z-index: 100;
+    }
+
+    /* Este es el menu desplegable */
+
+    .toggle {
+        transition: .5s;
+        position: absolute;
+        top: 10px;
+        right: 50px;
+        width: 45px;
+        height: 45px;
+        background:  #0881C1 url(./assets/img/menu.png);
+        background-size: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        cursor: pointer;
+        z-index: 1000;
+        border-radius: 2px;
+    }
+    .toggle.active {
+        background:  #0881C1 url(./assets/img/cerrar.png);
+        background-size: 25px;
+        background-repeat: no-repeat;
+        background-position: center;
+        position: fixed;
+    }
+    .proveedores,
+    .archivos {
+        padding: 0 50px;
+    }
+    .inicio .box,
+    .registro .box,
+    .usuario .box {
+        padding: 10px 50px;
+    }
+    .imagenes {
+        right: 50px;
+    }
+}
+
+@media (max-width: 650px) {
+    * {
+        font-size: 12px;
+    }
+    header {
+        padding: 10px 20px;
+    }
+    h1 {
+        font-size: 2.5em;
+    }
+    .mat-form-field {
+        position: relative!important;
+        width: 100%;
+        text-align: center;
+        left: 0;
+        margin-bottom: 50px;
+    }
+    .toggle {
+        top: 10px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        background-size: 25px;
+    }
+    .toggle.active {
+        background-size: 20px;
+    }
+    .inicio .box,
+    .registro .box,
+    .usuario .box {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 0 20px;
+    }
+    .inicio .box .text {
+        width: 80%;
+    }
+    .inicio .box .text img {
+        display: none;
+    }
+    .inicio .box .login {
+        margin-top: 60px;
+        width: 100%;
+    }
+    .inicio .box .login input {
+        width: 100%;
+    }
+    .registro .image,
+    .usuario .image {
+        width: 100%;
+    }
+    .registro .image img {
+        width: 50%;
+    }
+    .usuario .image img {
+        width: 30%;
+        margin-top: 20px;
+    }
+    .registro .register,
+    .usuario .register {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        padding-left: 0px;
+    }
+    .proveedores,
+    .archivos {
+        padding: 0 20px;
+        padding-bottom: 50px;
+    }
+    .proveedores .proveedor {
+        width: 60%;
+        height: 200px;
+    }
+    .imagenes {
+        right: 20px;
+    }
+    .archivos .register .input {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+    }
+    .imagenes a {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+    .circle {
+        display: none;
+    }
+}
